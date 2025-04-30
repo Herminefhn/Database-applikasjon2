@@ -256,6 +256,9 @@ app.post('/profile/delete', async function (req, res) {
 
 
 
+
+
+
 // ADMIN SYSTEM - opner admin.ejs
 app.get('/admin', async function (req, res) {
     if (req.session.loggedin) {
@@ -348,11 +351,13 @@ app.get("/add-place", async (req, res) => {
 
 app.post("/add-place", async (req, res) => {
     const db = await dbPromise;
-    const { place, image } = req.body;
+    const { place, image, rating } = req.body;
     const userid = req.session.userid;
+    const visitedStatus = req.body.visited === '1' ? 1 : 0; // Hvis '1', settes det til "Besøkt", ellers "Ikke Besøkt"
+    const finalRating = visitedStatus === 1 ? rating : null;
 
     // Tabellen eg bruker heiter "users" og har kolonnene "firstname", "lastname", "email" og "password"
-    await db.run("INSERT INTO placestovisit (place, image_url, user_id) VALUES (?, ?, ?)", place, image, userid);
+    await db.run("INSERT INTO placestovisit (place, image_url, visited, rating, user_id) VALUES (?, ?, ?, ?, ?)", place, image, visitedStatus, finalRating, userid);
     res.redirect("/home");
 
 })
@@ -381,8 +386,10 @@ app.post('/edit-place/:id', async (req, res) => {
     }
  
     const db = await dbPromise;
-    const { place, image } = req.body;
-    const result = await db.run("UPDATE placestovisit SET place = ?, image_URL = ? WHERE id = ? AND user_id = ?", [place, image, req.params.id, req.session.userid]);
+    const { place, image, rating } = req.body;
+    const visitedStatus = req.body.visited === '1' ? 1 : 0; // Hvis '1', settes det til "Besøkt", ellers "Ikke Besøkt"
+    const finalRating = rating ? rating : null;
+    const result = await db.run("UPDATE placestovisit SET place = ?, image_URL = ?, visited = ?, rating = ? WHERE id = ? AND user_id = ?", [place, image, visitedStatus, finalRating, req.params.id, req.session.userid]);
  
     if (result.changes === 0) {
         return res.status(403).send("Endring mislyktes – staden tilhører ikkje deg.");

@@ -11,11 +11,35 @@
 
 
 <body>
-<div class="container">
+
+  <div class="container">
     <h1>Rediger place</h1>
     <form action="/edit-place/<%= place.id %>" method="POST" class="edit-form">
-      <input type="text" name="place" value="<%= place.place %>" required placeholder="Stad">
+      <input type="text" name="place" value="<%= place.place %>" required placeholder="Plass">
       <input type="text" name="image" value="<%= place.image_url %>" required placeholder="Bilde-URL">
+
+      <div>
+        <label>Status:</label>
+        <!-- Radioknapp for Besøkt -->
+        <label for="visited_yes">Besøkt</label>
+        <input type="radio" id="visited_yes" name="visited" value="1" <%=place.visited===1 ? 'checked' : '' %>>
+
+        <!-- Radioknapp for Ikke Besøkt -->
+        <label for="visited_no">Ikkje Besøkt</label>
+        <input type="radio" id="visited_no" name="visited" value="0" <%=place.visited===0 ? 'checked' : '' %>>
+      </div>
+
+      <div id="rating-section" <%= place.visited == 1 ? 'style="display: block;"' : 'style="display: none;"' %>>
+        <label for="rating">Rating</label>
+        <select name="rating" id="rating">
+          <option value="">Velg vurdering</option>
+          <% for (let i = 1; i <= 5; i++) { %>
+            <option value="<%= i %>" <%= place.rating == i ? 'selected' : '' %>><%= i %></option>
+          <% } %>
+        </select>
+      </div>      
+
+
       <div class="form-buttons">
         <button type="submit" class="btn-primary">Lagre</button>
         <a href="/home" class="btn-cancel">Avbryt</a>
@@ -23,8 +47,24 @@
     </form>
   </div>
 
+  <script>
+    const visitedRadios = document.querySelectorAll('input[name="visited"]');
+    const ratingSection = document.getElementById('rating-section');
+
+    visitedRadios.forEach(radio => {
+      radio.addEventListener('change', () => {
+        if (radio.value === '1') {
+          ratingSection.style.display = 'block';
+        } else {
+          ratingSection.style.display = 'none';
+          document.getElementById('rating').value = ''; // Nullstill rating hvis "Ikkje besøkt"
+        }
+      });
+    });
+  </script>
+
 
 
 </body>
+
 </html>
-  

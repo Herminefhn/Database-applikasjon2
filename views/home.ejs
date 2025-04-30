@@ -38,32 +38,35 @@
     </nav>
   </header>
 
+<main>
+  <div class="container">   
+    <ul class="place-list">
+      <% places.forEach(place=> { %>
+        <li class="place-item">
+          <div class="image-wrapper">
+            <img src="<%= place.image_url %>" alt="<%= place.place %>" class="place-image">
+          </div>
+          <div class="place-info">
+            <span>
+              <%= place.place %>
+            </span>
 
-  <main>
-    <div class="container">
-      <ul class="place-list">
-        <% places.forEach(place=> { %>
-          <li class="place-item">
-            <div class="image-wrapper">
-              <img src="<%= place.image_url %>" alt="<%= place.place %>" class="place-image">
-            </div>
-            <div class="place-info">
-              <span>
-                <%= place.place %>
-              </span>
-              <a href="/edit-place/<%= place.id %>">✏️</a>
-              <form action="/delete-place/<%= place.id %>" method="POST" style="display:inline;" 
-                onsubmit="return confirm('Er du sikker på at du vil slette denne plassen?');">
-                <button type="submit">🗑️</button>
-                
-              </form>
-            </div>
-          </li>
-          <% }) %>
-      </ul>
-      <a href="/add-place" class="btn-primary">Legg til</a>
-    </div>
-  </main>
+            <!-- Vis status som Besøkt / Ikkje besøkt -->
+            <span>Status: <%= place.visited ? 'Besøkt' : 'Ikkje besøkt' %></span>
+
+            <a href="/edit-place/<%= place.id %>">✏️</a>
+            <form action="/delete-place/<%= place.id %>" method="POST" style="display:inline;"
+              onsubmit="return confirm('Er du sikker på at du vil slette denne plassen?');">
+              <button type="submit">🗑️</button>
+
+            </form>
+          </div>
+        </li>
+        <% }) %>
+    </ul>
+    <a href="/add-place" class="btn-primary">Legg til</a>
+  </div>
+</main>
   
 
 
