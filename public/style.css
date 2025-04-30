@@ -152,6 +152,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    
 }
 
 .place-image {
@@ -163,7 +164,6 @@ body {
 }
 
 .place-info {
-
     display: flex;
     align-items: center;
     justify-content: space-between;

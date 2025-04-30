@@ -53,6 +53,11 @@
 
             <!-- Vis status som Besøkt / Ikkje besøkt -->
             <span>Status: <%= place.visited ? 'Besøkt' : 'Ikkje besøkt' %></span>
+            
+                        <!-- Hvis plassen er besøkt, vis rating -->
+                        <% if (place.visited === 1) { %>
+                          <span>Vurdering: <%= place.rating ? place.rating : 'Ingen vurdering' %></span>
+                        <% } %>  
 
             <a href="/edit-place/<%= place.id %>">✏️</a>
             <form action="/delete-place/<%= place.id %>" method="POST" style="display:inline;"
