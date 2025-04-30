@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/style.css">
+
+  <title>Heim - OSS AS</title>
+</head>
+
+
+<body>
+<div class="container">
+    <h1>Rediger place</h1>
+    <form action="/edit-place/<%= place.id %>" method="POST" class="edit-form">
+      <input type="text" name="place" value="<%= place.place %>" required placeholder="Stad">
+      <input type="text" name="image" value="<%= place.image_url %>" required placeholder="Bilde-URL">
+      <div class="form-buttons">
+        <button type="submit" class="btn-primary">Lagre</button>
+        <a href="/home" class="btn-cancel">Avbryt</a>
+      </div>
+    </form>
+  </div>
+
+
+
+</body>
+</html>
+  

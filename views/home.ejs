@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://use.fontawesome.com/releases/v5.7.1/js/all.js"></script>
+
+  <title>Heim - OSS AS</title>
+</head>
+
+<body>
+  <header>
+    <nav>
+      <ul class="navlinks">
+        <li>
+          <a href="/home" class="active">
+            <i class="fas fa-home"></i> Heim
+          </a>
+        </li>
+        <li>
+          <a href="/profile">
+            <i class="fas fa-user"></i> Min profil
+          </a>
+        </li>
+        <% if (admin) { %>
+          <li>
+            <a href="/admin"> <i class="fas fa-cogs"></i> Admin </a>
+          </li>
+          <% } %>
+            <li>
+              <a href="/logout">
+                <i class="fas fa-sign-out-alt"></i> Logg ut
+              </a>
+            </li>
+      </ul>
+    </nav>
+  </header>
+
+
+  <main>
+    <div class="container">
+      <ul class="place-list">
+        <% places.forEach(place=> { %>
+          <li class="place-item">
+            <div class="image-wrapper">
+              <img src="<%= place.image_url %>" alt="<%= place.place %>" class="place-image">
+            </div>
+            <div class="place-info">
+              <span>
+                <%= place.place %>
+              </span>
+              <a href="/edit-place/<%= place.id %>">✏️</a>
+              <form action="/delete-place/<%= place.id %>" method="POST" style="display:inline;" 
+                onsubmit="return confirm('Er du sikker på at du vil slette denne plassen?');">
+                <button type="submit">🗑️</button>
+                
+              </form>
+            </div>
+          </li>
+          <% }) %>
+      </ul>
+      <a href="/add-place" class="btn-primary">Legg til</a>
+    </div>
+  </main>
+  
+
+
+</body>
+</html>
